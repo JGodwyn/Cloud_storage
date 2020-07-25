@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Edit profile - {{ user.username }} {% endblock title %}
+{% block other_css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+    <!-- <link href="{% static 'css/rollover_card.css' %}" rel="stylesheet" media="all"> -->
+{% endblock other_css %}
+{% block navbar %}
+  <a class="navbar-brand ml-4 text-dark" href="{% url 'cloud:profile' user.id %}"><img src="{% static 'img\ic-users-more.png' %}"> </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active mr-4 ml-4">
+        <a class="nav-link text-dark" href="{% url 'cloud:dashboard' user.id %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item mr-4">
+        <a class="nav-link text-dark" href="">About</a>
+      </li>
+    </ul>
+
+      <span class="navbar-text ml-4 mr-4">
+       <nav class="nav nav-pills flex-column flex-sm-row" style="width:auto;">
+          <a class="flex-sm text-sm-center nav-link active mr-4 bg-danger" href="{% url 'cloud:log_out' user.id %}">Log Out</a>
+        </nav>
+    </span>
+      </nav>
+
+  </div>
+<hr>
+{% endblock navbar %}
+
+
+{% block content %}
+<br><br><br><br><br>
+<h1 class="display-4 mb-4"> Edit Profile </h1>
+<br><br>
+ <form method="POST">
+     {% csrf_token %}
+     <div class="input-group" style="width:50em">
+         <input class="input--style-1" type="text" value="{{ user.username }}" name="username" required>
+     </div>
+     {% if error == 'None' %}
+     {% else %}
+            <i class="float-right text-danger"> {{ error }} can't be used, it already exists  </i>
+     {% endif %}
+
+     <div class="input-group">
+         <input class="input--style-1" type="text" value="{{ user.about }}" name="about" required>
+     </div>
+
+        <div class="p-t-20">
+            <button class="btn btn--radius btn--green" type="submit">Make changes </button>
+        </div>
+ </form>
+{% endblock content %}

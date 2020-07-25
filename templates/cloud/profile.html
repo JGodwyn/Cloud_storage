@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Profile - {{ user.username }} {% endblock title %}
+{% block other_css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+    <!-- <link href="{% static 'css/rollover_card.css' %}" rel="stylesheet" media="all"> -->
+{% endblock other_css %}
+{% block navbar %}
+  <a class="navbar-brand ml-4 text-dark" href="#"><img src="{% static 'img\ic-users-more.png' %}"> </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active mr-4 ml-4">
+        <a class="nav-link text-dark" href="{% url 'cloud:dashboard' user.id %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item mr-4">
+        <a class="nav-link text-dark" href="">About</a>
+      </li>
+    </ul>
+
+      <span class="navbar-text ml-4 mr-4">
+       <nav class="nav nav-pills flex-column flex-sm-row" style="width:auto;">
+          <a class="flex-sm text-sm-center nav-link active mr-4 bg-danger" href="{% url 'cloud:log_out' user.id %}">Log Out</a>
+        </nav>
+    </span>
+      </nav>
+
+  </div>
+<hr>
+{% endblock navbar %}
+
+
+{% block content %}
+<br><br><br><br><br>
+
+<div style="text-align:center">
+    <h1 class="display-2 lead mt-4" style="text-align:center"> {{ user.username }} </h1>
+    <p class="mt-4"> <b>Joined:</b> {{ user.date_joined }} </p>
+    {% if user.about == None %}
+    <form method="POST" class="row align-items-center justify-content-center">
+        {% csrf_token %}
+        <div class=" input-group inline mt-4" style="width:33em; item-align:center;">
+            <input class="input--style-1" type="text" placeholder="Say something about yourself" name="about" required>
+        </div>
+        <div class="p-t- mb-2 ml-4">
+            <button class="btn btn--radius btn--green" type="submit">Done</button>
+        </div>
+    </form>
+    {% else %}
+        <p class="mt-2"> <b>About: </b> {{ user.about }} </p>
+    {% endif %}
+    <br><br>
+    <hr>
+    <br><br>
+    <p class="mt-2 mb-4"> <img src="{% static 'img/Folder.svg' %}" class="mb-2"> <br> <b>{{ user.folder.count }}</b> Folder(s) </p>
+    <p class="mt-2 mb-4"> <img src="{% static 'img/files.svg' %} " class="mb-2"> <br> <b>{{ no_files }}</b> File(s)</p>
+    <p class="mt-2 mb-4"> <b>Total space used: </b>{{ total_size }} mb </p>
+
+    <hr>
+</div>
+<br><br><br><br>
+<div class="p-t- mb-2  row align-items-center justify-content-center">
+    <a href="{% url 'cloud:edit_profile' user.id 'None'%}">  <button class="btn btn--radius btn--green" type="submit">Edit Profile</button> </a>
+</div>
+{% endblock content %}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Dashboard - {{ user.username }} {% endblock title %}
+{% block other_css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+    <!-- <link href="{% static 'css/rollover_card.css' %}" rel="stylesheet" media="all"> -->
+{% endblock other_css %}
+{% block navbar %}
+  <a class="navbar-brand ml-4 text-dark" href="{% url 'cloud:profile' user.id %}"><img src="{% static 'img\ic-users-more.png' %}"> </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active mr-4 ml-4">
+        <a class="nav-link text-dark" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item mr-4">
+        <a class="nav-link text-dark" href="">About</a>
+      </li>
+    </ul>
+
+      <span class="navbar-text ml-4 mr-4">
+       <nav class="nav nav-pills flex-column flex-sm-row" style="width:auto;">
+          <a class="flex-sm text-sm-center nav-link active mr-4 bg-danger" href="{% url 'cloud:log_out' user.id %}">Log Out</a>
+        </nav>
+    </span>
+      </nav>
+
+  </div>
+<hr>
+{% endblock navbar %}
+
+
+{% block content %}
+<!--
+<div class = "card mt-4 bg-white" style="text-align:center; width:auto;">
+    <h1 class="mt-4 display-2 lead"> Login </h1>
+    <br>
+    <div class="row align-items-center justify-content-center mt-4">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="col-sm-12 mb-2 my-auto-mb-4">
+                     <img src="{% static 'img/Icon_user.svg' %}">
+                    <input type="text" name = "username" placeholder= "Your name" required autofocus>
+                </div>
+                <div class="col-sm-12 mt-4 my-auto">
+                    <img src="{% static 'img/ic-sport-winner.png' %}">
+                    <input type="password" name = "password" placeholder= "Password" required>
+                </div>
+                {% if error_message %}
+                    <div class="alert alert-danger mt-4" role="alert"><img src="{% static 'img/ic-emoji-sad.png' %}"></div>
+                {% endif %}
+                    <button class="btn btn-primary mb-4 mt-4" type="submit" name="action"> Go </button>
+            </form>
+        </div>
+
+    <p><i> Just arriving?  </i></p>
+    <p><a href=""> Signup </a> </p>
+
+</div>
+-->
+
+<br><br>
+<h1 class="display-3 lead"> Dashboard </h1>
+<h3 class="ml-2 lead text-success"> {{ user.username }} </h3>
+<br>
+<hr>
+<br>
+
+<form method="POST" action="#">
+    {% csrf_token %}
+    <input type="hidden" name = "pressed" value="pressed">
+        <button type="submit" class="btn btn--radius btn-primary "> Add folder </button>
+</form>
+<p class="float-right"> You currently have {{ user.folder.count }} folder(s)</p>
+
+
+{% if user.folder.all %}
+
+    <div class="card-deck" style="width: 88em; height:14em">
+        {% for folder in user.folder.all %}
+        <div class="bg-white p-t-100 p-b-10 font-roboto" style="width: auto">
+        <a href="{% url 'cloud:files' user.id folder.id %}">
+          <div class="card card-1">
+            <div class="card-body">
+                <h4 class="card-title mt-4">{{ folder.name }}</h4>
+              <p class="card-text" style="text-align: center">{{ folder.files.count }} file(s) </p>
+              <p class="card-text"><small class="text-muted"></small></p>
+            </div>
+              </a>
+
+            <div class="row align-items-center justify-content-center">
+              <form method="POST" action="#" class="">
+                {% csrf_token %}
+                    <input type="hidden" name="delete" value="{{ folder.id }}">
+                        <button style="text-align:center" type="submit" class=" btn btn--radius btn-danger mr-3"> Delete </button>
+                  </form>
+
+            <form method="POST" action="#" class="">
+                {% csrf_token %}
+                    <input type="hidden" name="edit" value="{{ folder.id }}">
+                        <button style="text-align:center" type="submit" class=" btn btn--radius btn--green"> Edit </button>
+            </form>
+            </div>
+
+        <br> <br>
+            </div>
+            <br>
+          </div>
+        {% endfor %}
+        <br>
+    </div>
+
+{% else %}
+<br><br><br><br><br><br>
+    <p class="lead text-danger" style="text-align:center"> This looks empty, try adding a folder above! </p>
+{% endif %}
+
+{% endblock content %}
+
+
+{% block other_js %}
+<!-- Jquery JS-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <!-- Vendor JS-->
+    <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+    <script src="{% static 'vendor/datepicker/moment.min.js' %}"></script>
+    <script src="{% static 'vendor/datepicker/daterangepicker.js' %}"></script>
+
+    <!-- Main JS-->
+    <script src="{% static 'js/global.js' %}"></script>
+{% endblock other_js %}

@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} {{ user.username }} - Create Folder {% endblock title %}
+{% block other_css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+{% endblock other_css %}
+{% block navbar %}
+  <a class="navbar-brand ml-4 text-dark" href="{% url 'cloud:profile' user.id %}"><img src="{% static 'img\ic-users-more.png' %}"> </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active mr-4 ml-4">
+        <a class="nav-link text-dark" href="{% url 'cloud:dashboard' user.id %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item mr-4">
+        <a class="nav-link text-dark" href="">About</a>
+      </li>
+    </ul>
+
+      <span class="navbar-text ml-4 mr-4">
+       <nav class="nav nav-pills flex-column flex-sm-row" style="width:auto;">
+          <a class="flex-sm text-sm-center nav-link active mr-4 bg-danger" href="{% url 'cloud:log_out' user.id %}">Log Out</a>
+        </nav>
+    </span>
+      </nav>
+
+  </div>
+
+<hr>
+{% endblock navbar %}
+
+
+{% block content %}
+<!--
+<div class = "card mt-4 bg-white" style="text-align:center; width:auto;">
+    <h1 class="mt-4 display-2 lead"> Login </h1>
+    <br>
+    <div class="row align-items-center justify-content-center mt-4">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="col-sm-12 mb-2 my-auto-mb-4">
+                     <img src="{% static 'img/Icon_user.svg' %}">
+                    <input type="text" name = "username" placeholder= "Your name" required autofocus>
+                </div>
+                <div class="col-sm-12 mt-4 my-auto">
+                    <img src="{% static 'img/ic-sport-winner.png' %}">
+                    <input type="password" name = "password" placeholder= "Password" required>
+                </div>
+                {% if error_message %}
+                    <div class="alert alert-danger mt-4" role="alert"><img src="{% static 'img/ic-emoji-sad.png' %}"></div>
+                {% endif %}
+                    <button class="btn btn-primary mb-4 mt-4" type="submit" name="action"> Go </button>
+            </form>
+        </div>
+
+    <p><i> Just arriving?  </i></p>
+    <p><a href=""> Signup </a> </p>
+
+</div>
+-->
+
+<div class="page-wrapper bg-white p-t-100 p-b-10 font-robo">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-1">
+                <!-- <div class="card-heading"></div> -->
+                <div class="card-body">
+                    <h2 class="display-4 mb-4">Add Folder</h2><br>
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input class="input--style-1" type="text" placeholder="Name" name="name" required>
+                        </div>
+
+                        <div class="input-group">
+                            <input class="input--style-1" type="text" placeholder="Describe this folder a bit" name="description">
+                        </div>
+                        <div class="p-t-20">
+                            <button class="btn btn--radius btn--green" type="submit">Create</button>
+                        </div>
+                    </form>
+                    <br> <br> <br>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+
+{% block other_js %}
+<!-- Jquery JS-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <!-- Vendor JS-->
+    <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+    <script src="{% static 'vendor/datepicker/moment.min.js' %}"></script>
+    <script src="{% static 'vendor/datepicker/daterangepicker.js' %}"></script>
+
+    <!-- Main JS-->
+    <script src="{% static 'js/global.js' %}"></script>
+{% endblock other_js %}
