@@ -277,3 +277,7 @@ def logout(request, id):
             line.delete()
 
     return HttpResponseRedirect(reverse('cloud:welcome'))
+
+
+def about(request):
+    return render(request, 'cloud/about.html')

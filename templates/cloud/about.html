@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Login {% endblock title %}
+{% block other_css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+{% endblock other_css %}
+{% block navbar %}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active mr-4 ml-4">
+        <a class="nav-link text-dark" href="{% url 'cloud:welcome' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item mr-4">
+        <a class="nav-link text-dark" href="#">About</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<hr>
+{% endblock navbar %}
+
+
+{% block content %}
+    <h1 class="display-4 lead mt-4" style="text-align: center;"> Who i am! </h1>
+    <hr>
+
+    <div class="row align-items-center justify-content-center">
+        <img src="{% static 'img\black and white.png' %}">
+    </div>
+
+    <div class="" style="text-align: center;">
+        <h1 class="mb-4"> John Godwyn </h1>
+        <p> I am an optimist and an educator who feels people ought to have choices at their creative path. </p>
+        <p> I am highly passionate about skill based, voluntary and flexible education. </p>
+        <br>
+        <hr style="width: auto;">
+        <br>
+        <p> As i write this, I am a <b> Graphic designer </b> and a <b> Python developer </b> </p>
+        <p> All the art seen here are mine from different point in time of my life. </p>
+        <p> I also developed this Portfolio using a Python's web framework called <b> Flask. </b> </p>
+        <br>
+        <hr style="width: autos;">
+        <br>
+        <p> I stay in Lagos, Nigeria </p>
+        <p> <b> Thanks for viewing this project </b></p>
+    </div>
+
+
+    <br><br><br><br>
+{% endblock content %}

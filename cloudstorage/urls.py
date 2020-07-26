@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/', include('cloud.urls')),
+    path('', include('cloud.urls')),
     path('cloud/api/', include('cloud.api.urls'))
 ]
 
